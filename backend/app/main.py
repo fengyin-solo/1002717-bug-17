@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.routers import ROUTERS
+from app.services.gate import service as gate_service
 from app.store import store
 
 app = FastAPI(title="港口集装箱作业管理平台", version="1.0.0")
@@ -21,6 +22,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# 闸口通行状态以服务层规则为唯一口径，启动时把示例数据按规则归一化一次
+gate_service.bootstrap()
 
 for module in ROUTERS:
     app.include_router(module.router)
