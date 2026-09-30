@@ -18,6 +18,8 @@ class PageResult(BaseModel, Generic[T]):
 class ActionResult(BaseModel):
     ok: bool
     message: str
+    detail: str | None = None
+    missing: list[str] | None = None
     entry: dict[str, Any] | None = None
 
 
